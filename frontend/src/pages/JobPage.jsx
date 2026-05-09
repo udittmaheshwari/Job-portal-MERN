@@ -2,6 +2,7 @@ import { useParams, useLoaderData, useNavigate } from 'react-router-dom';
 import { FaArrowLeft, FaMapMarker } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import API_URL from '../services/Api';
 
 const JobPage = ({ deleteJob }) => {
   const navigate = useNavigate();
@@ -171,7 +172,7 @@ const JobPage = ({ deleteJob }) => {
 
 const jobLoader = async ({ params }) => {
 
-  const res = await fetch(`/api/jobs/${params.id}`);
+  const res = await fetch(`${API_URL}/jobs/${params.id}`);
 
   if (!res.ok) {
     throw new Error('Job not found');

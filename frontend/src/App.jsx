@@ -11,11 +11,13 @@ import NotFoundPage from './pages/NotFoundPage';
 import JobPage, { jobLoader } from './pages/JobPage';
 import AddJobPage from './pages/AddJobPage';
 import EditJobPage from './pages/EditJobPage';
+import API_URL from './services/Api';
+
 
 const App = () => {
   // Add New Job
   const addJob = async (newJob) => {
-    const res = await fetch('/api/jobs', {
+    const res = await fetch(`${API_URL}/jobs`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -27,23 +29,29 @@ const App = () => {
 
   // Delete Job
   const deleteJob = async (id) => {
-    const res = await fetch(`/api/jobs/${id}`, {
+    const res = await fetch(`${API_URL}/jobs/${id}`, {
       method: 'DELETE',
     });
     return;
   };
 
   // Update Job
-  const updateJob = async (job,id) => {
-    const res = await fetch(`/api/jobs/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(job),
-    });
-    return;
-  };
+ const updateJob = async (updatedJob, id) => {
+
+  const response = await fetch(`${API_URL}/jobs/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(updatedJob),
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to update job');
+  }
+
+  return await response.json();
+};
 
   const router = createBrowserRouter(
     createRoutesFromElements(

@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import JobListing from './JobListing';
 import Spinner from './Spinner';
-
+import API_URL from '../services/Api';
 const JobListings = ({ isHome = false }) => {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchJobs = async () => {
-      const apiUrl = '/api/jobs';
+      const apiUrl = `${API_URL}/jobs`;
 
       try {
         const res = await fetch(apiUrl);
